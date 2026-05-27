@@ -185,7 +185,7 @@ html,body{width:100%;min-height:100vh;background:var(--cream);font-family:'DM Mo
   <button class="spec-btn" data-spec="marketing"  onclick="setSpec('marketing')">Marketing</button>
   <button class="spec-btn" data-spec="finance"    onclick="setSpec('finance')">Finance</button>
   <button class="spec-btn" data-spec="hr"         onclick="setSpec('hr')">Human Resources</button>
-  <button class="spec-btn" data-spec="ops"        onclick="setSpec('ops')">Operations</button>
+  <button class="spec-btn" data-spec="ops"        onclick="setSpec('ops')">Lean Operations & Systems</button>
   <button class="spec-btn" data-spec="ib"         onclick="setSpec('ib')">International Business</button>
   <button class="spec-btn" data-spec="analytics"  onclick="setSpec('analytics')">Business Analytics & AI</button>
 </div>
@@ -312,7 +312,7 @@ const SPECS = {
 
   finance: {
     label:"Finance", stemDomain:"business",
-    stemTitle:"Finance & Accounting", stemSub:"MBA Specialisation · SBM",
+    stemTitle:"Finance & Accounting", stemSub:"",
     poTags:["PO1","PO2","PO4","PO7"],
     base:"A rigorous, model-driven financial analyst who translates numbers into strategic decisions",
     groups:[
@@ -360,7 +360,7 @@ const SPECS = {
 
   hr: {
     label:"Human Resources", stemDomain:"team",
-    stemTitle:"Human Resource Management", stemSub:"MBA Specialisation · SBM",
+    stemTitle:"Human Resource Management", stemSub:"",
     poTags:["PO3","PO5","PO2","PO6"],
     base:"A people-strategy architect who aligns human capital systems with organisational performance",
     groups:[
@@ -407,8 +407,8 @@ const SPECS = {
   },
 
   ops: {
-    label:"Operations", stemDomain:"business",
-    stemTitle:"Operations Management", stemSub:"MBA Specialisation · SBM",
+    label:"Lean Operations & Systems", stemDomain:"business",
+    stemTitle:"Operations Management", stemSub:"",
     poTags:["PO1","PO2","PO4","PO6"],
     base:"An efficiency-driven operations leader who builds resilient, data-informed supply chains and processes",
     groups:[
@@ -456,7 +456,7 @@ const SPECS = {
 
   ib: {
     label:"International Business", stemDomain:"global",
-    stemTitle:"International Business", stemSub:"MBA Specialisation · SBM",
+    stemTitle:"International Business", stemSub:"",
     poTags:["PO4","PO1","PO3","PO5","PO6"],
     base:"A globally-fluent business professional who identifies and executes cross-border opportunities with contextual precision",
     groups:[
@@ -508,7 +508,7 @@ const SPECS = {
 
   analytics: {
     label:"Business Analytics", stemDomain:"analytics",
-    stemTitle:"Business Analytics", stemSub:"MBA Specialisation · SBM",
+    stemTitle:"Business Analytics", stemSub:"",
     poTags:["PO2","PO1","PO6","PO7"],
     base:"A decision-intelligence specialist who transforms complex data into confident organisational action",
     groups:[
@@ -556,9 +556,6 @@ const SPECS = {
 };
 
 const PO_LABELS = [
-  "PO1 · Management Knowledge","PO2 · Analytical Thinking","PO3 · Value-Based Leadership",
-  "PO4 · Global Business Acumen","PO5 · Team & Self Leadership","PO6 · Innovation & Entrepreneurship",
-  "PO7 · Research Aptitude","PO8 · Sustainability & Lifelong Learning",
 ];
 
 const BAND_CSS = {X:"band-X",P:"band-P",D:"band-D"};
