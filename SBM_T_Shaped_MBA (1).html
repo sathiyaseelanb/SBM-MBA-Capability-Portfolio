@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The T-Shaped MBA Professional · SBM CHRIST</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F2547;--navy-deep:#081830;--navy-mid:#1F3A5F;
+  --gold:#D2AE6D;--gold-pale:#EDD9A3;--gold-faint:#F8F2E3;
+  --cream:#F7F3EC;--white:#FFFFFF;--muted:#5C6070;--ink:#1A1A2E;
+  --stem-w:300px;--bar-h:172px;
+}
+html,body{width:100%;min-height:100vh;background:var(--cream);font-family:'DM Mono',monospace;color:var(--navy)}
+.page{max-width:1120px;margin:0 auto;padding:44px 28px 80px}
+
+/* ── Masthead ── */
+.masthead{display:flex;align-items:flex-end;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid rgba(15,37,71,.16);margin-bottom:22px;gap:16px;flex-wrap:wrap}
+.masthead-inst{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.masthead-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--navy);line-height:1.05}
+.masthead-title em{font-style:italic;color:var(--gold)}
+.masthead-right{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.9}
+.masthead-right strong{color:var(--navy);font-size:11px;display:block}
+
+/* ── Spec switcher ── */
+.spec-bar{display:flex;align-items:center;gap:8px;margin-bottom:34px;flex-wrap:wrap}
+.spec-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap;margin-right:4px}
+.spec-btn{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.09em;padding:6px 14px;border:1px solid rgba(15,37,71,.2);border-radius:2px;background:var(--white);color:var(--navy);cursor:pointer;transition:all .2s;white-space:nowrap}
+.spec-btn:hover{border-color:var(--gold)}
+.spec-btn.active{background:var(--navy);color:var(--gold-pale);border-color:var(--navy)}
+
+/* ── Breadth label row ── */
+.breadth-label-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.breadth-label-row span{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.breadth-label-row::before,.breadth-label-row::after{content:'';flex:1;height:1px;background:rgba(15,37,71,.15)}
+
+/* ── Horizontal bar ── */
+.h-bar{width:100%;height:var(--bar-h);background:var(--navy);border-radius:4px 4px 0 0;display:flex;position:relative;overflow:hidden}
+.h-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--gold-pale) 50%,var(--gold) 80%,transparent)}
+
+.domain-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 4px;border-right:1px solid rgba(255,255,255,.06);position:relative;cursor:default;transition:background .2s;text-align:center}
+.domain-cell:last-child{border-right:none}
+.domain-cell.is-stem{background:rgba(210,174,109,.14);border-right:1px solid rgba(210,174,109,.3);border-left:1px solid rgba(210,174,109,.3)}
+.domain-cell.is-stem::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:var(--stem-w);height:3px;background:var(--gold);opacity:.7}
+.domain-icon{font-size:20px;margin-bottom:6px}
+.domain-num{font-size:8px;letter-spacing:.12em;color:rgba(210,174,109,.75);margin-bottom:3px}
+.domain-name{font-family:'Cormorant Garamond',serif;font-size:11.5px;font-weight:500;color:rgba(255,255,255,.86);line-height:1.3}
+.domain-cell.is-stem .domain-name{color:var(--gold-pale);font-weight:600;font-size:12px}
+
+/* ── Below bar layout ── */
+.below-bar{display:flex;justify-content:center;position:relative}
+.depth-side{flex:1;display:flex;align-items:flex-start;padding-top:56px}
+.depth-side.left{justify-content:flex-end;padding-right:22px}
+.depth-side.right{justify-content:flex-start;padding-left:22px}
+.depth-side-text{writing-mode:vertical-rl;text-orientation:mixed;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.depth-side-text.left{transform:rotate(180deg)}
+.depth-side-text::before,.depth-side-text::after{content:'';flex:1;width:1px;background:var(--gold);opacity:.25;min-height:40px}
+
+/* ── Vertical stem ── */
+.v-stem{width:var(--stem-w);flex-shrink:0;display:flex;flex-direction:column;align-items:stretch}
+
+/* Stem header */
+.stem-header{background:var(--navy-deep);padding:18px 20px 14px;text-align:center;position:relative}
+.stem-header::before,.stem-header::after{content:'';position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold) 0%,rgba(210,174,109,.08) 100%)}
+.stem-header::before{left:0}.stem-header::after{right:0}
+.stem-spec-tag{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;opacity:.85}
+.stem-spec-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--white);line-height:1.25}
+.stem-spec-sub{font-size:8.5px;color:rgba(255,255,255,.4);letter-spacing:.08em;margin-top:4px}
+
+/* Stem body */
+.stem-body{background:var(--navy-mid);flex:1;display:flex;flex-direction:column;padding:0 16px 16px;position:relative}
+.stem-body::before,.stem-body::after{content:'';position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,rgba(210,174,109,.5) 0%,rgba(210,174,109,.05) 100%)}
+.stem-body::before{left:0}.stem-body::after{right:0}
+
+/* Competency group label */
+.comp-group-label{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(210,174,109,.6);margin:18px 0 8px;padding-bottom:6px;border-bottom:1px solid rgba(210,174,109,.15)}
+
+/* Competency card */
+.stem-comp{background:rgba(15,37,71,.45);border:1px solid rgba(210,174,109,.18);border-radius:3px;padding:12px 14px 10px;margin-bottom:8px;position:relative;transition:background .2s,border-color .2s;cursor:default}
+.stem-comp:hover{background:rgba(210,174,109,.07);border-color:rgba(210,174,109,.38)}
+.stem-comp:last-child{margin-bottom:0}
+
+/* Band pill */
+.stem-comp-band{position:absolute;top:10px;right:10px;font-size:7px;letter-spacing:.1em;padding:2px 6px;border-radius:2px;font-weight:500}
+.band-P{background:rgba(210,174,109,.18);color:var(--gold);border:1px solid rgba(210,174,109,.35)}
+.band-X{background:rgba(210,174,109,.32);color:var(--gold-pale);border:1px solid rgba(210,174,109,.55)}
+.band-D{background:rgba(255,255,255,.07);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15)}
+
+/* Comp header row */
+.stem-comp-po{font-size:8px;letter-spacing:.13em;color:rgba(210,174,109,.7);margin-bottom:4px}
+.stem-comp-name{font-family:'Cormorant Garamond',serif;font-size:14.5px;font-weight:600;color:rgba(255,255,255,.93);line-height:1.25;margin-bottom:6px;padding-right:52px}
+.stem-comp-desc{font-size:8.5px;color:rgba(255,255,255,.48);line-height:1.6;margin-bottom:8px}
+
+/* Sub-skills */
+.sub-skills{display:flex;flex-wrap:wrap;gap:4px}
+.sub-skill{font-size:7.5px;letter-spacing:.06em;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);white-space:nowrap}
+.sub-skill.highlight{background:rgba(210,174,109,.1);color:rgba(210,174,109,.8);border-color:rgba(210,174,109,.25)}
+
+/* Evidence bar */
+.evidence-bar-wrap{margin-top:8px}
+.evidence-bar-label{font-size:7.5px;color:rgba(255,255,255,.3);letter-spacing:.08em;margin-bottom:3px;display:flex;justify-content:space-between}
+.evidence-bar-track{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.evidence-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,rgba(210,174,109,.5),var(--gold));transition:width .8s ease}
+
+/* Stem base */
+.stem-base{background:var(--navy-deep);padding:18px 20px 24px;border-radius:0 0 4px 4px;text-align:center;position:relative}
+.stem-base::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.stem-base-label{font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(210,174,109,.6);margin-bottom:6px}
+.stem-base-quote{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(255,255,255,.7);line-height:1.55}
+.stem-base-po{margin-top:10px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.stem-base-po-chip{font-size:7.5px;letter-spacing:.08em;padding:2px 8px;border:1px solid rgba(210,174,109,.25);color:rgba(210,174,109,.65);border-radius:2px}
+
+/* Depth arrow label */
+.depth-arrow-row{display:flex;align-items:center;gap:10px;margin-top:12px}
+.depth-arrow-row span{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.depth-arrow-row::before,.depth-arrow-row::after{content:'';flex:1;height:1px;background:rgba(15,37,71,.14)}
+
+/* Band legend */
+.band-legend{display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.band-legend-item{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--muted)}
+.band-dot{width:8px;height:8px;border-radius:1px}
+.band-dot.P{background:rgba(210,174,109,.7)}
+.band-dot.X{background:var(--gold)}
+.band-dot.D{background:rgba(92,96,112,.4)}
+
+/* PO strip */
+.po-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:36px;justify-content:center}
+.po-chip{font-size:9px;letter-spacing:.09em;padding:5px 11px;border:1px solid rgba(15,37,71,.14);background:var(--white);color:var(--navy);border-radius:2px;cursor:default;transition:all .18s;white-space:nowrap}
+.po-chip:hover{background:var(--navy);color:var(--gold-pale);border-color:var(--navy)}
+
+/* Explainer */
+.explainer-row{display:grid;grid-template-columns:1fr 2px 1fr;margin-top:32px;border:1px solid rgba(15,37,71,.11);border-radius:3px;overflow:hidden}
+.explainer-divider{background:var(--gold);opacity:.35}
+.explainer-box{background:var(--white);padding:22px 26px}
+.explainer-tag{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.explainer-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--navy);margin-bottom:10px;line-height:1.2}
+.explainer-body{font-size:9.5px;color:var(--muted);line-height:1.8}
+.explainer-box.breadth-box{border-top:3px solid var(--navy)}
+.explainer-box.depth-box{border-top:3px solid var(--gold)}
+
+/* Footer */
+.footer{margin-top:40px;padding-top:16px;border-top:1px solid rgba(15,37,71,.12);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px}
+.footer-quote{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--muted);line-height:1.6;max-width:540px}
+.footer-meta{font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.9}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes growWidth{from{width:0}to{width:var(--target-w)}}
+.h-bar{animation:fadeIn .5s ease forwards}
+.domain-cell{animation:fadeUp .45s ease forwards;opacity:0}
+.domain-cell:nth-child(1){animation-delay:.04s}.domain-cell:nth-child(2){animation-delay:.09s}
+.domain-cell:nth-child(3){animation-delay:.14s}.domain-cell:nth-child(4){animation-delay:.19s}
+.domain-cell:nth-child(5){animation-delay:.24s}.domain-cell:nth-child(6){animation-delay:.29s}
+.domain-cell:nth-child(7){animation-delay:.34s}.domain-cell:nth-child(8){animation-delay:.39s}
+.v-stem{animation:fadeUp .55s .28s ease forwards;opacity:0}
+.explainer-box{animation:fadeUp .45s .5s ease forwards;opacity:0}
+
+/* Responsive */
+@media(max-width:800px){:root{--stem-w:260px;--bar-h:155px}.domain-name{font-size:10.5px}}
+@media(max-width:580px){:root{--stem-w:210px;--bar-h:136px}.domain-icon{font-size:16px}.domain-num{display:none}.explainer-row{grid-template-columns:1fr}.explainer-divider{height:2px;width:100%}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div>
+    <div class="masthead-inst">CHRIST (Deemed to be University) &nbsp;·&nbsp; School of Business and Management</div>
+    <div class="masthead-title">The <em>T-Shaped</em> MBA Professional</div>
+  </div>
+  <div class="masthead-right">
+    MBA Capability Portfolio
+  </div>
+</div>
+
+<!-- SPEC SWITCHER -->
+<div class="spec-bar">
+  <span class="spec-label">MBA Specialisation &rarr;</span>
+  <button class="spec-btn" data-spec="marketing"  onclick="setSpec('marketing')">Marketing</button>
+  <button class="spec-btn" data-spec="finance"    onclick="setSpec('finance')">Finance</button>
+  <button class="spec-btn" data-spec="hr"         onclick="setSpec('hr')">Human Resources</button>
+  <button class="spec-btn" data-spec="ops"        onclick="setSpec('ops')">Operations</button>
+  <button class="spec-btn" data-spec="ib"         onclick="setSpec('ib')">International Business</button>
+  <button class="spec-btn" data-spec="analytics"  onclick="setSpec('analytics')">Business Analytics & AI</button>
+</div>
+
+<!-- T CANVAS -->
+<div class="t-canvas">
+  <div class="breadth-label-row">
+    <span>The Eight SBM-MBA Capability Domains</span>
+  </div>
+  <div class="h-bar" id="h-bar"></div>
+  <div class="below-bar">
+    <div class="depth-side left"><div class="depth-side-text left">Specialisation</div></div>
+    <div class="v-stem" id="v-stem"></div>
+    <div class="depth-side right"><div class="depth-side-text">Specialisation</div></div>
+  </div>
+  <div class="depth-arrow-row"><span>Specialisation Competencies</span></div>
+  <div class="band-legend">
+    <div class="band-legend-item"><div class="band-dot X"></div><span>Exemplary</span></div>
+    <div class="band-legend-item"><div class="band-dot P"></div><span>Proficient</span></div>
+    <div class="band-legend-item"><div class="band-dot D"></div><span>Developing</span></div>
+  </div>
+</div>
+
+<!-- PO STRIP -->
+<div class="po-row" id="po-row"></div>
+
+<!-- EXPLAINER -->
+<div class="explainer-row">
+  <div class="explainer-box breadth-box">
+    <div class="explainer-tag">The Horizontal Bar — Breadth</div>
+    <div class="explainer-title">Cross-Functional Fluency Across All 8 Domains</div>
+    <div class="explainer-body">
+      Every SBM MBA graduate develops working fluency across all eight capability domains — from Business Foundations and Data Analytics to Sustainability and Research Aptitude. These competencies allow graduates to collaborate across functions, speak every team's language, and contribute from Day 1 regardless of where they sit.<br/><br/>
+      The horizontal bar is identical for every specialisation. What varies is which column the stem drops through — signalling where depth has been deliberately cultivated.
+    </div>
+  </div>
+  <div class="explainer-divider"></div>
+  <div class="explainer-box depth-box">
+    <div class="explainer-tag">The Vertical Stem — Depth</div>
+    <div class="explainer-title">Specialisation-Grade Expertise That Defines Professional Identity</div>
+    <div class="explainer-body">
+      The stem carries competencies that go beyond the general portfolio — they are specific to the student's MBA specialisation, assessed at Proficient or Exemplary band, and evidenced by multiple PARQ artifacts. Each competency includes the tools and methods the graduate can deploy, sub-skills they have developed, and an evidence-depth indicator.<br/><br/>
+      Depth gives a recruiter a reason to hire <em>this</em> graduate specifically. Breadth gives confidence they will work across the whole organisation.
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-quote">"Breadth earns you a seat at the table. Depth earns you the right to speak first."</div>
+  <div class="footer-meta">SBM MBA Capability Portfolio<br/>CHRIST (Deemed to be University)<br/></div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// ── 8 Breadth domains (horizontal bar) ───────────────────────────────────
+const DOMAINS = [
+  {num:"01",icon:"📊",name:"Business\nFoundations",   po:"PO1·PO2", key:"business"},
+  {num:"02",icon:"🔍",name:"Data Analytics\n& Decisions",po:"PO2·PO7",key:"analytics"},
+  {num:"03",icon:"⚖️", name:"Ethical\nLeadership",    po:"PO3·PO5", key:"leadership"},
+  {num:"04",icon:"🌐",name:"Global Business\nAcumen", po:"PO4",     key:"global"},
+  {num:"05",icon:"🤝",name:"Team\nEffectiveness",     po:"PO5",     key:"team"},
+  {num:"06",icon:"💡",name:"Innovation &\nEntrepreneurship",po:"PO6",key:"innovation"},
+  {num:"07",icon:"🔬",name:"Research\nAptitude",      po:"PO7",     key:"research"},
+  {num:"08",icon:"🌱",name:"Sustainability\n& Learning",po:"PO8",   key:"sustainability"},
+];
+
+// ── Specialisation depth data ─────────────────────────────────────────────
+// band: X=Exemplary P=Proficient D=Developing
+// evidence: 0–100 (depth of evidence in portfolio)
+// skills: array of sub-skill tags (highlight=true = gold emphasis)
+// groups allow visual separation of competency clusters within the stem
+
+const SPECS = {
+
+  marketing: {
+    label:"Marketing", stemDomain:"innovation",
+    stemTitle:"Marketing Management", stemSub:"",
+    poTags:["PO1","PO2","PO4","PO6","PO7"],
+    base:"A market-intelligence-led brand builder who converts consumer insight into measurable commercial growth",
+    groups:[
+      {
+        label:"Consumer & Market Intelligence",
+        comps:[
+          {po:"MKT·PO7", name:"Consumer Insight & Market Research",
+           desc:"Designing and executing qualitative and quantitative research to understand buyer behaviour, unmet needs, and decision drivers",
+           skills:[{t:"Conjoint Analysis",h:true},{t:"Ethnography",h:false},{t:"Focus Groups",h:false},{t:"Quant Survey Design",h:true},{t:"Kano Model",h:false}],
+           band:"P",evidence:82},
+          {po:"MKT·PO2", name:"Marketing Analytics & Measurement",
+           desc:"Applying data methods to track campaign performance, attribution, customer lifetime value, and marketing ROI",
+           skills:[{t:"Google Analytics",h:true},{t:"Attribution Modelling",h:true},{t:"CLV Analysis",h:false},{t:"A/B Testing",h:false},{t:"Cohort Analysis",h:false}],
+           band:"P",evidence:75},
+        ]
+      },
+      {
+        label:"Brand & Strategy",
+        comps:[
+          {po:"MKT·PO1", name:"Brand Strategy & Positioning",
+           desc:"Building and sustaining brand equity through differentiated positioning, identity architecture, and consistent consumer experience",
+           skills:[{t:"Brand Equity Models",h:true},{t:"Perceptual Mapping",h:true},{t:"Kapferer Prism",h:false},{t:"Brand Audit",h:false},{t:"Repositioning",h:false}],
+           band:"X",evidence:92},
+          {po:"MKT·PO1", name:"New Product Development & Launch",
+           desc:"Managing the full NPD lifecycle from ideation through concept testing, business case, and go-to-market execution",
+           skills:[{t:"Stage-Gate Process",h:true},{t:"Concept Testing",h:false},{t:"GTM Strategy",h:true},{t:"Pricing Strategy",h:false},{t:"Launch Metrics",h:false}],
+           band:"P",evidence:78},
+        ]
+      },
+      {
+        label:"Digital & Integrated Marketing",
+        comps:[
+          {po:"MKT·PO6", name:"Digital Marketing & MarTech",
+           desc:"Designing and executing digital campaigns across paid, owned, and earned channels using marketing technology platforms",
+           skills:[{t:"SEO/SEM",h:true},{t:"Programmatic",h:false},{t:"CRM & Automation",h:true},{t:"Content Strategy",h:false},{t:"Social Commerce",h:false}],
+           band:"P",evidence:80},
+          {po:"MKT·PO4", name:"Integrated Marketing Communications",
+           desc:"Crafting consistent cross-channel communication strategies that align message, medium, and audience for maximum impact",
+           skills:[{t:"Campaign Architecture",h:true},{t:"Media Mix Modelling",h:true},{t:"Message Hierarchy",h:false},{t:"Influencer Strategy",h:false}],
+           band:"D",evidence:55},
+        ]
+      }
+    ]
+  },
+
+  finance: {
+    label:"Finance", stemDomain:"business",
+    stemTitle:"Finance & Accounting", stemSub:"MBA Specialisation · SBM",
+    poTags:["PO1","PO2","PO4","PO7"],
+    base:"A rigorous, model-driven financial analyst who translates numbers into strategic decisions",
+    groups:[
+      {
+        label:"Valuation & Modelling",
+        comps:[
+          {po:"FIN·PO2", name:"Financial Modelling & Valuation",
+           desc:"Building robust, auditable financial models to value businesses, evaluate investments, and support M&A, PE, and capital markets decisions",
+           skills:[{t:"DCF Valuation",h:true},{t:"Comparable Analysis",h:true},{t:"LBO Modelling",h:false},{t:"Sensitivity Tables",h:false},{t:"Waterfall Models",h:false}],
+           band:"X",evidence:95},
+          {po:"FIN·PO1", name:"Corporate Finance & Capital Structure",
+           desc:"Analysing and advising on financing decisions, capital allocation priorities, dividend policy, and the trade-offs between debt and equity",
+           skills:[{t:"WACC",h:true},{t:"Capital Allocation",h:true},{t:"Dividend Policy",h:false},{t:"M&A Structuring",h:false},{t:"Rights Issues",h:false}],
+           band:"P",evidence:84},
+        ]
+      },
+      {
+        label:"Investment & Risk",
+        comps:[
+          {po:"FIN·PO2", name:"Investment Analysis & Portfolio Management",
+           desc:"Evaluating securities, constructing portfolios, and applying risk-return frameworks to institutional and retail investment contexts",
+           skills:[{t:"Equity Research",h:true},{t:"Portfolio Theory",h:false},{t:"Factor Models",h:true},{t:"Risk-Adjusted Return",h:false},{t:"Fixed Income",h:false}],
+           band:"P",evidence:79},
+          {po:"FIN·PO4", name:"Financial Risk Management",
+           desc:"Identifying, measuring, and hedging financial risks using derivatives, scenario analysis, and regulatory frameworks",
+           skills:[{t:"VaR & CVaR",h:true},{t:"Hedging Strategies",h:true},{t:"Derivatives",h:false},{t:"Credit Risk",h:false},{t:"Basel III Awareness",h:false}],
+           band:"P",evidence:73},
+        ]
+      },
+      {
+        label:"Reporting & Digital Finance",
+        comps:[
+          {po:"FIN·PO1", name:"Financial Reporting & Analysis",
+           desc:"Interpreting financial statements, performing ratio analysis, and communicating financial health to internal and external stakeholders",
+           skills:[{t:"Ratio Analysis",h:true},{t:"IFRS Awareness",h:false},{t:"Earnings Quality",h:false},{t:"Management Accounts",h:false}],
+           band:"P",evidence:88},
+          {po:"FIN·PO7", name:"FinTech & Digital Finance",
+           desc:"Evaluating how blockchain, open banking, AI-driven underwriting, and payment innovations reshape financial services",
+           skills:[{t:"Blockchain Basics",h:false},{t:"RegTech",h:false},{t:"Open Banking",h:true},{t:"AI in Finance",h:true},{t:"CBDC",h:false}],
+           band:"D",evidence:52},
+        ]
+      }
+    ]
+  },
+
+  hr: {
+    label:"Human Resources", stemDomain:"team",
+    stemTitle:"Human Resource Management", stemSub:"MBA Specialisation · SBM",
+    poTags:["PO3","PO5","PO2","PO6"],
+    base:"A people-strategy architect who aligns human capital systems with organisational performance",
+    groups:[
+      {
+        label:"Talent & Acquisition",
+        comps:[
+          {po:"HR·PO3",  name:"Talent Acquisition & Employer Branding",
+           desc:"Designing competency-based selection systems and building an employer value proposition that attracts and converts high-potential candidates",
+           skills:[{t:"Competency-Based Interview",h:true},{t:"EVP Design",h:true},{t:"Structured Selection",h:false},{t:"Psychometric Tools",h:false},{t:"Assessment Centres",h:false}],
+           band:"P",evidence:80},
+          {po:"HR·PO2",  name:"HR Analytics & Workforce Planning",
+           desc:"Using data to model attrition, segment the workforce, forecast talent supply and demand, and measure the ROI of HR interventions",
+           skills:[{t:"Attrition Modelling",h:true},{t:"Workforce Segmentation",h:false},{t:"People Analytics Dashboard",h:true},{t:"Succession Mapping",h:false}],
+           band:"P",evidence:76},
+        ]
+      },
+      {
+        label:"Learning & Performance",
+        comps:[
+          {po:"HR·PO5",  name:"Learning & Development Design",
+           desc:"Conducting needs analysis, designing instructional experiences, and evaluating L&D effectiveness using the Kirkpatrick model and ROI frameworks",
+           skills:[{t:"Needs Analysis",h:true},{t:"Instructional Design",h:true},{t:"Kirkpatrick Model",h:false},{t:"Digital Learning",h:false},{t:"Coaching Design",h:false}],
+           band:"X",evidence:90},
+          {po:"HR·PO3",  name:"Compensation & Total Rewards",
+           desc:"Designing equitable, competitive reward structures through job evaluation, market benchmarking, and incentive plan architecture",
+           skills:[{t:"Job Evaluation",h:true},{t:"Pay Equity Analysis",h:true},{t:"Short-Term Incentives",h:false},{t:"Benefits Architecture",h:false}],
+           band:"P",evidence:74},
+        ]
+      },
+      {
+        label:"Organisation & Change",
+        comps:[
+          {po:"HR·PO5",  name:"Organisation Development & Change",
+           desc:"Diagnosing organisational health, designing OD interventions, and leading change using structured frameworks that sustain adoption",
+           skills:[{t:"Kotter's 8 Steps",h:true},{t:"ADKAR",h:true},{t:"Culture Diagnostics",h:false},{t:"OD Interventions",h:false},{t:"Resistance Management",h:false}],
+           band:"P",evidence:78},
+          {po:"HR·PO6",  name:"Future of Work & HR Innovation",
+           desc:"Evaluating how AI-augmented work, gig models, and hybrid workplaces are reshaping talent strategy and the HR function itself",
+           skills:[{t:"AI in HR",h:true},{t:"Gig Economy Frameworks",h:false},{t:"Hybrid Work Design",h:true},{t:"DEI Analytics",h:false}],
+           band:"D",evidence:50},
+        ]
+      }
+    ]
+  },
+
+  ops: {
+    label:"Operations", stemDomain:"business",
+    stemTitle:"Operations Management", stemSub:"MBA Specialisation · SBM",
+    poTags:["PO1","PO2","PO4","PO6"],
+    base:"An efficiency-driven operations leader who builds resilient, data-informed supply chains and processes",
+    groups:[
+      {
+        label:"Supply Chain & Procurement",
+        comps:[
+          {po:"OPS·PO1", name:"Supply Chain Design & Optimisation",
+           desc:"Designing end-to-end supply networks that balance cost, service level, and resilience across domestic and global contexts",
+           skills:[{t:"Network Design",h:true},{t:"Inventory Optimisation",h:true},{t:"S&OP",h:false},{t:"Demand Planning",h:false},{t:"Distribution Strategy",h:false}],
+           band:"X",evidence:91},
+          {po:"OPS·PO1", name:"Strategic Procurement & Vendor Management",
+           desc:"Leading sourcing decisions through TCO analysis, supplier risk assessment, and relationship management across the supply base",
+           skills:[{t:"TCO Analysis",h:true},{t:"Supplier Evaluation",h:true},{t:"Contract Negotiation",h:false},{t:"SRM",h:false},{t:"Category Management",h:false}],
+           band:"P",evidence:80},
+        ]
+      },
+      {
+        label:"Process Excellence",
+        comps:[
+          {po:"OPS·PO2", name:"Process Excellence & Lean Six Sigma",
+           desc:"Applying Lean and Six Sigma tools to reduce waste, improve yield, and embed a culture of continuous improvement",
+           skills:[{t:"Value Stream Mapping",h:true},{t:"DMAIC",h:true},{t:"Kaizen Events",h:false},{t:"Statistical Process Control",h:false},{t:"5S",h:false}],
+           band:"P",evidence:83},
+          {po:"OPS·PO2", name:"Quality Management Systems",
+           desc:"Designing and sustaining quality management frameworks aligned to ISO standards and customer experience expectations",
+           skills:[{t:"ISO 9001 Awareness",h:false},{t:"Root Cause Analysis",h:true},{t:"FMEA",h:true},{t:"QFD",h:false},{t:"Poka-Yoke",h:false}],
+           band:"P",evidence:70},
+        ]
+      },
+      {
+        label:"Industry 4.0 & Global Ops",
+        comps:[
+          {po:"OPS·PO6", name:"Industry 4.0 & Smart Operations",
+           desc:"Evaluating automation, IoT, digital twins, and AI-driven operations to quantify ROI and guide transformation decisions",
+           skills:[{t:"IoT Integration",h:false},{t:"Digital Twins",h:true},{t:"Predictive Maintenance",h:true},{t:"Automation ROI",h:false}],
+           band:"P",evidence:72},
+          {po:"OPS·PO4", name:"Global Operations & Supply Resilience",
+           desc:"Managing geopolitical, climate, and supplier risks to build redundancy and agility into global supply networks",
+           skills:[{t:"Nearshoring Strategy",h:true},{t:"Geopolitical Risk",h:true},{t:"Dual Sourcing",h:false},{t:"BCP Design",h:false}],
+           band:"D",evidence:54},
+        ]
+      }
+    ]
+  },
+
+  ib: {
+    label:"International Business", stemDomain:"global",
+    stemTitle:"International Business", stemSub:"MBA Specialisation · SBM",
+    poTags:["PO4","PO1","PO3","PO5","PO6"],
+    base:"A globally-fluent business professional who identifies and executes cross-border opportunities with contextual precision",
+    groups:[
+      {
+        label:"Market Entry & Global Strategy",
+        comps:[
+          {po:"IB·PO4",  name:"International Market Entry Strategy",
+           desc:"Evaluating and structuring market entry decisions across emerging and developed markets using systematic country analysis and entry mode frameworks",
+           skills:[{t:"CAGE Framework",h:true},{t:"Entry Mode Selection",h:true},{t:"OLI Paradigm",h:false},{t:"Country Risk Scoring",h:false},{t:"Greenfield vs Acquisition",h:false}],
+           band:"X",evidence:93},
+          {po:"IB·PO1",  name:"Global Business Strategy & MNC Management",
+           desc:"Designing global-local strategy balances and managing the structural and governance tensions of multinational organisations",
+           skills:[{t:"Integration-Responsiveness Grid",h:true},{t:"Transnational Strategy",h:true},{t:"HQ-Subsidiary Relations",h:false},{t:"Global Value Chain",h:false}],
+           band:"P",evidence:85},
+        ]
+      },
+      {
+        label:"Trade, Finance & Legal",
+        comps:[
+          {po:"IB·PO4",  name:"International Trade & Trade Finance",
+           desc:"Navigating the mechanics of cross-border trade including documentation, financing instruments, and trade policy frameworks",
+           skills:[{t:"Letters of Credit",h:true},{t:"Incoterms",h:true},{t:"Trade Finance Instruments",h:false},{t:"Export Documentation",h:false},{t:"WTO Framework",h:false}],
+           band:"P",evidence:80},
+          {po:"IB·PO4",  name:"International Business Law & Compliance",
+           desc:"Understanding the legal architecture governing cross-border operations including contract enforcement, IP protection, and regulatory compliance",
+           skills:[{t:"Cross-Border Contracts",h:true},{t:"IP in Global Markets",h:false},{t:"FCPA/Anti-Bribery",h:true},{t:"Transfer Pricing Basics",h:false},{t:"Dispute Resolution",h:false}],
+           band:"P",evidence:72},
+        ]
+      },
+      {
+        label:"Culture, Diplomacy & Emerging Markets",
+        comps:[
+          {po:"IB·PO3",  name:"Cross-Cultural Management & Negotiation",
+           desc:"Leading and negotiating across cultures using structured frameworks to bridge communication styles, decision norms, and relationship expectations",
+           skills:[{t:"Hofstede Dimensions",h:true},{t:"BATNA & Anchoring",h:true},{t:"High/Low Context",h:false},{t:"Cultural Due Diligence",h:false},{t:"Interpreter Protocols",h:false}],
+           band:"X",evidence:90},
+          {po:"IB·PO6",  name:"Emerging Market Strategy & Innovation",
+           desc:"Identifying and structuring business opportunities in high-growth emerging markets including BOP strategies and reverse innovation",
+           skills:[{t:"BOP Market Design",h:true},{t:"Reverse Innovation",h:true},{t:"Political Economy Analysis",h:false},{t:"Informal Market Navigation",h:false}],
+           band:"P",evidence:76},
+          {po:"IB·PO4",  name:"Foreign Exchange & International Finance",
+           desc:"Managing currency risk exposure and evaluating financing options for international operations and cross-border investments",
+           skills:[{t:"FX Risk Management",h:true},{t:"Currency Hedging",h:true},{t:"Transfer Pricing",h:false},{t:"Repatriation Strategy",h:false}],
+           band:"D",evidence:58},
+        ]
+      }
+    ]
+  },
+
+  analytics: {
+    label:"Business Analytics", stemDomain:"analytics",
+    stemTitle:"Business Analytics", stemSub:"MBA Specialisation · SBM",
+    poTags:["PO2","PO1","PO6","PO7"],
+    base:"A decision-intelligence specialist who transforms complex data into confident organisational action",
+    groups:[
+      {
+        label:"Predictive & Statistical Methods",
+        comps:[
+          {po:"BA·PO2",  name:"Predictive Modelling & Machine Learning",
+           desc:"Building and validating supervised and unsupervised ML models to forecast outcomes, segment customers, and optimise business decisions",
+           skills:[{t:"Regression & Classification",h:true},{t:"Random Forest / XGBoost",h:true},{t:"Clustering",h:false},{t:"Model Validation",h:false},{t:"Hyperparameter Tuning",h:false}],
+           band:"X",evidence:94},
+          {po:"BA·PO2",  name:"Statistical Analysis & Experimental Design",
+           desc:"Applying inferential statistics and controlled experimental frameworks to evaluate causal claims and validate business interventions",
+           skills:[{t:"Hypothesis Testing",h:true},{t:"A/B & Multivariate Tests",h:true},{t:"ANOVA",h:false},{t:"Bayesian Inference",h:false},{t:"Power Analysis",h:false}],
+           band:"P",evidence:82},
+        ]
+      },
+      {
+        label:"Data Engineering & BI",
+        comps:[
+          {po:"BA·PO2",  name:"Data Engineering & SQL",
+           desc:"Structuring, querying, and transforming data from multiple sources to create reliable analytical foundations for business insight",
+           skills:[{t:"Advanced SQL",h:true},{t:"Database Design",h:false},{t:"ETL Pipelines",h:true},{t:"Python (Pandas)",h:true},{t:"Data Cleaning",h:false}],
+           band:"P",evidence:85},
+          {po:"BA·PO1",  name:"Business Intelligence & Dashboard Design",
+           desc:"Designing self-service BI systems and executive dashboards that embed analytics into operational decision rhythms",
+           skills:[{t:"Power BI / Tableau",h:true},{t:"KPI Architecture",h:true},{t:"DAX / Calculated Fields",h:false},{t:"Data Storytelling",h:false}],
+           band:"P",evidence:80},
+        ]
+      },
+      {
+        label:"AI, Strategy & Communication",
+        comps:[
+          {po:"BA·PO6",  name:"AI for Business & Decision-Making",
+           desc:"Evaluating and deploying AI/ML solutions for business use cases including NLP applications, recommendation engines, and AI-augmented workflows",
+           skills:[{t:"LLM Applications",h:true},{t:"Prompt Engineering",h:false},{t:"AI ROI Evaluation",h:true},{t:"Responsible AI",h:false},{t:"GenAI in Business",h:true}],
+           band:"P",evidence:77},
+          {po:"BA·PO1",  name:"Analytics Communication & Data Storytelling",
+           desc:"Translating complex analytical outputs into executive narratives that drive decisions — connecting model outputs to business stakes",
+           skills:[{t:"Pyramid Principle",h:true},{t:"Insight Framing",h:true},{t:"Chart Design",h:false},{t:"Board-Level Presentation",h:false}],
+           band:"P",evidence:83},
+        ]
+      }
+    ]
+  }
+};
+
+const PO_LABELS = [
+  "PO1 · Management Knowledge","PO2 · Analytical Thinking","PO3 · Value-Based Leadership",
+  "PO4 · Global Business Acumen","PO5 · Team & Self Leadership","PO6 · Innovation & Entrepreneurship",
+  "PO7 · Research Aptitude","PO8 · Sustainability & Lifelong Learning",
+];
+
+const BAND_CSS = {X:"band-X",P:"band-P",D:"band-D"};
+const BAND_LABEL = {X:"Exemplary",P:"Proficient",D:"Developing"};
+
+let currentSpec = "marketing";
+
+function setSpec(key){
+  currentSpec = key;
+  document.querySelectorAll('.spec-btn').forEach(b=>b.classList.toggle('active',b.dataset.spec===key));
+  renderAll();
+}
+
+function renderAll(){
+  const spec = SPECS[currentSpec];
+  renderBar(spec.stemDomain);
+  renderStem(spec);
+}
+
+function renderBar(stemKey){
+  const bar = document.getElementById('h-bar');
+  bar.innerHTML = '';
+  DOMAINS.forEach(d=>{
+    const isStem = d.key === stemKey;
+    const el = document.createElement('div');
+    el.className = 'domain-cell'+(isStem?' is-stem':'');
+    el.title = d.name.replace('\n',' ')+' · '+d.po;
+    el.innerHTML = `<div class="domain-icon">${d.icon}</div><div class="domain-num">${d.num}</div><div class="domain-name">${d.name.replace('\n','<br/>')}</div>`;
+    bar.appendChild(el);
+  });
+}
+
+function renderStem(spec){
+  const stemEl = document.getElementById('v-stem');
+  stemEl.innerHTML = '';
+
+  // Header
+  const hdr = document.createElement('div');
+  hdr.className = 'stem-header';
+  hdr.innerHTML = `<div class="stem-spec-tag">MBA Specialisation</div><div class="stem-spec-name">${spec.stemTitle}</div><div class="stem-spec-sub">${spec.stemSub}</div>`;
+  stemEl.appendChild(hdr);
+
+  // Body
+  const body = document.createElement('div');
+  body.className = 'stem-body';
+
+  spec.groups.forEach(group=>{
+    const glabel = document.createElement('div');
+    glabel.className = 'comp-group-label';
+    glabel.textContent = group.label;
+    body.appendChild(glabel);
+
+    group.comps.forEach(c=>{
+      const card = document.createElement('div');
+      card.className = 'stem-comp';
+
+      const bandPct = c.evidence;
+      const skillsHtml = c.skills.map(s=>`<span class="sub-skill${s.h?' highlight':''}">${s.t}</span>`).join('');
+
+      card.innerHTML = `
+        <div class="stem-comp-band ${BAND_CSS[c.band]}">${BAND_LABEL[c.band]}</div>
+        <div class="stem-comp-po">${c.po}</div>
+        <div class="stem-comp-name">${c.name}</div>
+        <div class="stem-comp-desc">${c.desc}</div>
+        <div class="sub-skills">${skillsHtml}</div>
+        <div class="evidence-bar-wrap">
+          <div class="evidence-bar-label">
+            <span>Portfolio Evidence Depth</span>
+            <span>${bandPct}%</span>
+          </div>
+          <div class="evidence-bar-track">
+            <div class="evidence-bar-fill" style="width:${bandPct}%"></div>
+          </div>
+        </div>`;
+      body.appendChild(card);
+    });
+  });
+
+  stemEl.appendChild(body);
+
+  // Base
+  const base = document.createElement('div');
+  base.className = 'stem-base';
+  const poHtml = spec.poTags.map(p=>`<span class="stem-base-po-chip">${p}</span>`).join('');
+  base.innerHTML = `
+    <div class="stem-base-label">Graduate Identity</div>
+    <div class="stem-base-quote">${spec.base}</div>
+    <div class="stem-base-po">${poHtml}</div>
+    <div class="stem-base-label" style="margin-top:10px;opacity:.45">Day-1-Ready · SBM MBA</div>`;
+  stemEl.appendChild(base);
+}
+
+function renderPOs(){
+  const row = document.getElementById('po-row');
+  row.innerHTML = '';
+  PO_LABELS.forEach(po=>{
+    const chip = document.createElement('div');
+    chip.className = 'po-chip';
+    chip.textContent = po;
+    row.appendChild(chip);
+  });
+}
+
+// Boot
+renderPOs();
+setSpec('marketing');
+</script>
+</body>
+</html>
