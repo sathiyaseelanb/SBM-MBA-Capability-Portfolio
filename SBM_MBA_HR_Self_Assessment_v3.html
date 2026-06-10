@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SBM MBA · Capability Self-Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:17px;}
+body{font-family:'Inter',system-ui,sans-serif;background:#fff;color:#000;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+/* ── COVER ── */
+#cover{max-width:680px;margin:0 auto;padding:56px 24px 60px;}
+.cover-inst{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#666;margin-bottom:8px;}
+#cover h1{font-size:clamp(26px,5vw,38px);font-weight:700;line-height:1.15;margin-bottom:8px;}
+.cover-sub{font-size:16px;color:#444;margin-bottom:36px;}
+.cover-rule{border:none;border-top:2px solid #000;margin-bottom:32px;}
+
+/* Student fields */
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px;margin-bottom:28px;}
+.field-full{grid-column:1/-1;}
+.field label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#555;margin-bottom:6px;}
+.field input,.field select{width:100%;font-family:'Inter',sans-serif;font-size:16px;padding:9px 12px;border:1.5px solid #bbb;border-radius:3px;background:#fff;color:#000;}
+.field input:focus,.field select:focus{outline:none;border-color:#000;}
+
+/* Radio pill groups */
+.radio-group{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:4px;}
+.radio-group label{display:flex;align-items:center;gap:7px;font-size:15px;font-weight:500;cursor:pointer;padding:6px 13px;border:1.5px solid #ccc;border-radius:3px;transition:border-color .12s,background .12s;}
+.radio-group label:has(input:checked){border-color:#000;background:#f4f4f4;font-weight:700;}
+.radio-group input[type=radio]{width:15px;height:15px;accent-color:#000;cursor:pointer;flex-shrink:0;}
+
+/* Instructions */
+.instr{border:1.5px solid #000;padding:18px 20px;margin-bottom:28px;border-radius:2px;}
+.instr h3{font-size:13px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px;}
+.instr p{font-size:15px;color:#333;line-height:1.65;margin-bottom:8px;}
+.instr p:last-child{margin-bottom:0;}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid #ddd;}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:14px;}
+.legend-sym{font-size:16px;font-weight:700;width:24px;text-align:center;}
+
+/* Begin button */
+.btn-begin{display:block;width:100%;padding:15px;background:#000;color:#fff;border:none;border-radius:3px;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;cursor:pointer;text-align:center;transition:opacity .15s;margin-bottom:10px;}
+.btn-begin:hover{opacity:.85;}
+
+/* ── ASSESSMENT WRAPPER ── */
+#assessment{display:none;}
+
+/* ── TOP NAV (2 buttons) ── */
+#top-nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1.5px solid #000;display:flex;align-items:center;padding:0 24px;}
+.tnav-btn{padding:14px 20px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;border:none;background:none;cursor:pointer;color:#888;border-bottom:3px solid transparent;margin-bottom:-1.5px;transition:color .12s;white-space:nowrap;}
+.tnav-btn:hover{color:#000;}
+.tnav-btn.active{color:#000;border-bottom-color:#000;}
+.tnav-btn:disabled{color:#ccc;cursor:default;}
+.tnav-sep{flex:1;}
+.tnav-ap-label{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#888;}
+
+/* ── PAGES ── */
+.page{display:none;max-width:880px;margin:0 auto;padding:40px 24px 80px;}
+.page.active{display:block;}
+
+/* ── PAGE HEADER ── */
+.page-header{margin-bottom:36px;padding-bottom:18px;border-bottom:2px solid #000;}
+.page-eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#777;margin-bottom:6px;}
+.page-header h2{font-size:clamp(20px,4vw,28px);font-weight:700;line-height:1.2;}
+.page-header p{font-size:15px;color:#555;margin-top:6px;line-height:1.6;}
+
+/* ── DOMAIN BLOCK (within common page) ── */
+.domain-block{margin-bottom:48px;}
+.domain-header{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #ccc;}
+.domain-code{font-size:12px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#888;flex-shrink:0;}
+.domain-name{font-size:19px;font-weight:700;}
+.domain-po{font-size:12px;font-weight:500;color:#aaa;margin-left:auto;flex-shrink:0;}
+
+/* ── SPEC AREA BLOCK ── */
+.spec-block{margin-bottom:44px;}
+.spec-area-header{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #ccc;}
+.spec-area-num{font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#aaa;flex-shrink:0;}
+.spec-area-name{font-size:17px;font-weight:700;}
+.spec-area-behaviour{font-size:14px;font-style:italic;color:#555;margin-bottom:12px;line-height:1.6;padding-left:2px;}
+
+/* ── RBT TABLE ── */
+.rbt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.rbt-table{width:100%;min-width:580px;border-collapse:collapse;table-layout:fixed;}
+.rbt-table th{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:10px 12px;border:1.5px solid #000;background:#000;color:#fff;white-space:nowrap;}
+.rbt-table th.chk-th{text-align:center;width:9%;}
+.rbt-table td{font-size:15px;padding:12px;border:1px solid #ccc;vertical-align:middle;line-height:1.6;}
+.rbt-table tr:nth-child(even) td{background:#fafafa;}
+.rbt-table tr:nth-child(odd)  td{background:#fff;}
+.col-level{width:16%;}
+.col-stmt {width:56%;}
+.level-code{display:block;font-size:11px;font-weight:700;letter-spacing:.07em;color:#888;margin-bottom:3px;}
+.level-name{display:block;font-size:16px;font-weight:700;}
+.star{font-size:12px;}
+.stmt-text{font-size:15px;font-style:italic;color:#222;line-height:1.65;}
+.chk-cell{text-align:center;vertical-align:middle;}
+.chk-cell input[type=radio]{width:18px;height:18px;accent-color:#000;cursor:pointer;display:block;margin:0 auto;}
+.chk-label{display:block;font-size:11px;color:#888;margin-top:3px;}
+
+/* ── DIVIDER ── */
+.section-divider{border:none;border-top:1px solid #e0e0e0;margin:40px 0;}
+
+/* ── REFLECTION TABLE ── */
+.refl-section-label{font-size:12px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#555;margin-bottom:12px;}
+.refl-table{width:100%;border-collapse:collapse;margin-bottom:8px;}
+.refl-table th{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:10px 13px;border:1.5px solid #000;background:#000;color:#fff;text-align:left;}
+.refl-table td{border:1px solid #ccc;vertical-align:top;padding:0;}
+.refl-key{width:32%;padding:12px 13px;font-size:15px;font-weight:600;line-height:1.5;border-right:1px solid #ccc;vertical-align:top;}
+.refl-val{width:68%;}
+.refl-prompt{display:block;font-size:12px;font-style:italic;color:#999;padding:8px 13px 4px;line-height:1.5;}
+.refl-val textarea{width:100%;border:none;font-family:'Inter',sans-serif;font-size:15px;color:#000;padding:6px 13px 12px;background:transparent;resize:vertical;line-height:1.6;}
+.refl-val textarea:focus{outline:none;background:#fafafa;}
+.level-sel-row{display:flex;flex-wrap:wrap;gap:6px;padding:10px 13px 12px;}
+.level-sel-row label{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;cursor:pointer;padding:5px 11px;border:1px solid #ccc;border-radius:3px;transition:border-color .12s,background .12s;}
+.level-sel-row label:has(input:checked){border-color:#000;background:#f4f4f4;font-weight:700;}
+.level-sel-row input[type=radio]{width:14px;height:14px;accent-color:#000;cursor:pointer;}
+
+/* ── SPEC GATEWAY (bottom of common page, A2+) ── */
+#spec-gateway{display:none;margin-top:48px;padding:28px 24px;border:2px solid #000;border-radius:2px;}
+.gateway-label{font-size:12px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;margin-bottom:8px;}
+.gateway-title{font-size:20px;font-weight:700;margin-bottom:8px;}
+.gateway-desc{font-size:15px;color:#444;line-height:1.65;margin-bottom:20px;}
+.gateway-error{display:none;font-size:13px;font-weight:600;color:#000;background:#f4f4f4;border:1px solid #000;padding:8px 12px;border-radius:2px;margin-bottom:12px;}
+.btn-proceed{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;background:#000;color:#fff;border:none;border-radius:3px;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s;}
+.btn-proceed:hover{opacity:.85;}
+
+/* ── PDF DOWNLOAD BUTTON ── */
+.pdf-zone{margin-top:40px;padding-top:28px;border-top:2px solid #000;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.pdf-zone p{font-size:14px;color:#555;flex:1;min-width:200px;line-height:1.55;}
+.btn-pdf{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;background:#000;color:#fff;border:none;border-radius:3px;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
+.btn-pdf:hover{opacity:.85;}
+
+/* ── BACK LINK ── */
+.back-row{margin-bottom:24px;}
+.btn-back{display:inline-flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#000;background:none;border:1.5px solid #ccc;border-radius:3px;padding:7px 14px;cursor:pointer;transition:background .12s;}
+.btn-back:hover{background:#f4f4f4;}
+
+/* ── PRINT / PDF ── */
+@media print{
+  #cover,#top-nav,.btn-back,.pdf-zone,.gateway-error{display:none!important;}
+  #assessment{display:block!important;}
+  .page{display:block!important;padding:0;max-width:100%;}
+  .page-header{page-break-after:avoid;}
+  .domain-block{page-break-inside:avoid;}
+  .spec-block{page-break-inside:avoid;}
+  body{font-size:11px;}
+  .domain-name{font-size:14px;}
+  .spec-area-name{font-size:13px;}
+  .stmt-text{font-size:11px;}
+  .rbt-table th,.rbt-table td{font-size:11px;padding:6px 8px;}
+  .refl-key{font-size:11px;}
+  .refl-val textarea{min-height:40px;font-size:11px;}
+  .refl-prompt{font-size:10px;}
+  .level-sel-row label{font-size:11px;padding:3px 7px;}
+  .radio-group label{border:none;padding:0 6px 0 0;}
+  #print-header{display:block!important;}
+  .page+.page{page-break-before:always;}
+  .rbt-table{min-width:unset;}
+  #spec-gateway{display:none!important;}
+}
+
+/* Print header (hidden on screen) */
+#print-header{display:none;margin-bottom:24px;padding-bottom:14px;border-bottom:2px solid #000;}
+#print-header h2{font-size:16px;font-weight:700;margin-bottom:6px;}
+#print-header .ph-row{display:flex;flex-wrap:wrap;gap:4px 24px;font-size:11px;color:#444;}
+#print-header .ph-row span{font-weight:600;color:#000;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  html{font-size:15px;}
+  #cover{padding:36px 16px 48px;}
+  .field-grid{grid-template-columns:1fr;}
+  .field-full{grid-column:1;}
+  .page{padding:28px 14px 60px;}
+  .col-level{width:20%;}
+  .col-stmt{width:50%;}
+  .rbt-table td,.rbt-table th{padding:8px;font-size:13px;}
+  .stmt-text{font-size:13px;}
+  .refl-key{width:38%;font-size:13px;}
+  .refl-val textarea{font-size:13px;}
+  .legend{flex-direction:column;gap:10px;}
+}
+@media(max-width:400px){
+  .radio-group label{font-size:13px;padding:5px 10px;}
+  .domain-name{font-size:17px;}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     COVER
+══════════════════════════════════════ -->
+<div id="cover">
+  <div class="cover-inst">CHRIST (Deemed to be University) · School of Business and Management</div>
+  <h1>MBA Capability Self-Assessment</h1>
+  <p class="cover-sub">Revised Bloom's Taxonomy · RBT-1 to RBT-6 · Common MBA + Specialisation</p>
+  <hr class="cover-rule">
+
+  <div class="field-grid">
+    <div class="field"><label for="f-name">Student Name</label><input type="text" id="f-name" placeholder="Full name"></div>
+    <div class="field"><label for="f-reg">Registration Number</label><input type="text" id="f-reg" placeholder="e.g. 2400101"></div>
+    <div class="field"><label for="f-batch">Batch / Year of Entry</label><input type="text" id="f-batch" placeholder="e.g. 2024–26"></div>
+    <div class="field"><label for="f-mentor">Faculty Mentor</label><input type="text" id="f-mentor" placeholder="Mentor name"></div>
+    <div class="field field-full"><label for="f-date">Date of Completion</label><input type="date" id="f-date"></div>
+
+    <div class="field field-full">
+      <label>Assessment Point</label>
+      <div class="radio-group" id="ap-group">
+        <label><input type="radio" name="ap" value="A0"> A0 · Joining</label>
+        <label><input type="radio" name="ap" value="A1"> A1 · End T1</label>
+        <label><input type="radio" name="ap" value="A2"> A2 · End T2</label>
+        <label><input type="radio" name="ap" value="A3"> A3 · End T3</label>
+        <label><input type="radio" name="ap" value="A4"> A4 · End T4</label>
+        <label><input type="radio" name="ap" value="A5"> A5 · End T5</label>
+        <label><input type="radio" name="ap" value="A6"> A6 · Graduation</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="instr">
+    <h3>How to complete this assessment</h3>
+    <p>Read each statement carefully. Mark <strong>Yes</strong> only when you can name specific, verifiable evidence. Mark <strong>Partly</strong> when you have done this in some contexts but not consistently. Mark <strong>No</strong> when you recognise the description but cannot yet demonstrate it.</p>
+    <p>After marking all six RBT levels for each domain, complete the single reflection table at the bottom of each section.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-sym">✓</span><span><strong>Yes</strong> — I have specific, verifiable evidence for this right now.</span></div>
+      <div class="legend-item"><span class="legend-sym">~</span><span><strong>Partly</strong> — Emerging but not yet consistent or complete.</span></div>
+      <div class="legend-item"><span class="legend-sym">✗</span><span><strong>No</strong> — I recognise this but cannot yet demonstrate it.</span></div>
+    </div>
+  </div>
+
+  <button class="btn-begin" onclick="beginAssessment()">Begin Self-Assessment →</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     ASSESSMENT WRAPPER
+══════════════════════════════════════ -->
+<div id="assessment">
+
+  <!-- TOP NAV -->
+  <nav id="top-nav">
+    <button class="tnav-btn active" id="nav-common" onclick="showPage('common')">Common MBA Domains</button>
+    <button class="tnav-btn" id="nav-spec" disabled onclick="showPage('spec')">Specialisation</button>
+    <div class="tnav-sep"></div>
+    <span class="tnav-ap-label" id="nav-ap-label"></span>
+  </nav>
+
+  <!-- ── PAGE: COMMON MBA ── -->
+  <div class="page active" id="page-common">
+
+    <!-- Print header -->
+    <div id="print-header">
+      <h2>MBA Capability Self-Assessment — Common MBA Domains</h2>
+      <div class="ph-row" id="print-summary"></div>
+    </div>
+
+    <div class="page-header">
+      <div class="page-eyebrow">Part 1 — All Students · All Assessment Points</div>
+      <h2>Common MBA Capability Domains</h2>
+      <p>All eight domains are assessed at every assessment point. Read each I-statement, mark Yes / Partly / No, then complete the single reflection table at the end of this section.</p>
+    </div>
+
+    <!-- 8 domains injected here by JS -->
+    <div id="common-domains"></div>
+
+    <hr class="section-divider">
+
+    <!-- COMMON REFLECTION TABLE -->
+    <div class="refl-section-label">Common MBA — Domain Reflection</div>
+    <p style="font-size:14px;color:#555;margin-bottom:14px;line-height:1.6;">One reflection table covers all eight domains. Complete this after marking all the statements above.</p>
+    <table class="refl-table" id="common-refl-table">
+      <thead><tr><th style="width:32%">Reflection Area</th><th>My Response</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="refl-key">My current RBT level — select one for each domain</td>
+          <td class="refl-val">
+            <span class="refl-prompt">For each domain below, circle or tick your honest current level.</span>
+            <div id="domain-level-selectors" style="padding:10px 13px 14px;display:flex;flex-direction:column;gap:10px;"></div>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Domain where I have the strongest evidence</td>
+          <td class="refl-val">
+            <span class="refl-prompt">Name the domain and the specific piece of evidence that best demonstrates your capability in it.</span>
+            <textarea rows="3" placeholder="Domain · Evidence · Why this is strong…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Domain where the biggest gap remains</td>
+          <td class="refl-val">
+            <span class="refl-prompt">Name the domain and be specific about what you cannot yet do that RBT-3 Apply requires.</span>
+            <textarea rows="3" placeholder="Domain · The specific gap · Why it matters for Day-1 readiness…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Development goal before the next Assessment Point</td>
+          <td class="refl-val">
+            <span class="refl-prompt">State what you will be able to do — in what kind of situation — that you cannot do now. Write it in a form you can verify.</span>
+            <textarea rows="3" placeholder="I will be able to… in situations where… verified by…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Action plan — named actions, deadlines, accountability</td>
+          <td class="refl-val">
+            <span class="refl-prompt">Name at least one action, one deadline, and one person other than yourself who will know if you did it.</span>
+            <textarea rows="3" placeholder="Action · Deadline · Accountability person…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Faculty Mentor observations and priority</td>
+          <td class="refl-val">
+            <span class="refl-prompt">Completed by the Faculty Mentor during or after the mentoring conversation.</span>
+            <textarea rows="3" placeholder="Mentor notes…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Mentor signature and date</td>
+          <td class="refl-val" style="padding:12px 13px;">
+            <span style="font-size:15px;">Name: ________________________________&nbsp;&nbsp;&nbsp;Date: ________________</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SPEC GATEWAY (A2+ only) -->
+    <div id="spec-gateway">
+      <div class="gateway-label">Next Step — Specialisation Assessment</div>
+      <div class="gateway-title">Choose your specialisation track</div>
+      <div class="gateway-desc">From A2 onward, your specialisation capability areas are assessed alongside the Common MBA domains. Select your track below and proceed to the specialisation self-assessment.</div>
+      <div class="radio-group" id="spec-group" style="margin-bottom:20px;">
+        <label><input type="radio" name="spec" value="BAI"> Business Analytics &amp; AI</label>
+        <label><input type="radio" name="spec" value="FIN"> Finance</label>
+        <label><input type="radio" name="spec" value="HRM"> Human Resources</label>
+        <label><input type="radio" name="spec" value="MKT"> Marketing</label>
+        <label><input type="radio" name="spec" value="LOS"> Lean Operations &amp; Systems</label>
+        <label><input type="radio" name="spec" value="IB">  International Business</label>
+      </div>
+      <div class="gateway-error" id="gateway-error">Please select your specialisation track before proceeding.</div>
+      <button class="btn-proceed" onclick="proceedToSpec()">Proceed to Specialisation Self-Assessment →</button>
+    </div>
+
+    <!-- PDF ZONE — A0/A1 only -->
+    <div class="pdf-zone" id="pdf-zone-common" style="display:none;">
+      <p>Your Common MBA self-assessment is complete. Download a PDF to share with your Faculty Mentor or to keep as a portfolio record.</p>
+      <button class="btn-pdf" onclick="downloadPDF()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download Assessment PDF
+      </button>
+    </div>
+
+  </div><!-- /page-common -->
+
+  <!-- ── PAGE: SPECIALISATION ── -->
+  <div class="page" id="page-spec">
+    <div class="back-row">
+      <button class="btn-back" onclick="showPage('common')">← Back to Common MBA</button>
+    </div>
+
+    <!-- Print header for spec page -->
+    <div id="print-header-spec" style="display:none;">
+      <h2 id="print-spec-title">Specialisation Self-Assessment</h2>
+      <div class="ph-row" id="print-summary-spec"></div>
+    </div>
+
+    <div class="page-header" id="spec-page-header">
+      <div class="page-eyebrow" id="spec-eyebrow">Part 2 — Specialisation Track</div>
+      <h2 id="spec-page-title">Specialisation Self-Assessment</h2>
+      <p id="spec-page-desc">Each capability area in your specialisation is listed below with its demonstrable behaviour. Mark your RBT level for each area, then complete the single reflection table at the end of this section.</p>
+    </div>
+
+    <!-- Spec areas injected here by JS -->
+    <div id="spec-areas"></div>
+
+    <hr class="section-divider">
+
+    <!-- SPEC REFLECTION TABLE -->
+    <div class="refl-section-label" id="spec-refl-label">Specialisation — Reflection</div>
+    <p style="font-size:14px;color:#555;margin-bottom:14px;line-height:1.6;">One reflection table covers all capability areas in your specialisation.</p>
+    <table class="refl-table">
+      <thead><tr><th style="width:32%">Reflection Area</th><th id="spec-refl-th">My Response — Specialisation</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="refl-key">My RBT level in each capability area</td>
+          <td class="refl-val">
+            <span class="refl-prompt">For each capability area below, select your honest current level.</span>
+            <div id="spec-level-selectors" style="padding:10px 13px 14px;display:flex;flex-direction:column;gap:10px;"></div>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Capability area where I have the strongest evidence</td>
+          <td class="refl-val">
+            <span class="refl-prompt">Name the area and the specific work, project, or internship outcome that most strongly demonstrates your capability.</span>
+            <textarea rows="3" placeholder="Capability area · Evidence · Why it is strong…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Capability area where the biggest gap remains</td>
+          <td class="refl-val">
+            <span class="refl-prompt">Name the area and be precise about what you cannot yet do. Vague answers are not useful for development planning.</span>
+            <textarea rows="3" placeholder="Capability area · The specific gap · What closing it would look like…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">My Day-1 readiness assessment for this specialisation</td>
+          <td class="refl-val">
+            <span class="refl-prompt">Honestly assess your readiness for a Day-1 professional role in this specialisation. What can you do? What would an employer notice is missing?</span>
+            <textarea rows="4" placeholder="What I can demonstrate confidently · What is still developing · What a Day-1 employer would notice…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Development goal before the next Assessment Point</td>
+          <td class="refl-val">
+            <span class="refl-prompt">State what you will be able to do in this specialisation — in what kind of situation — that you cannot do now.</span>
+            <textarea rows="3" placeholder="I will be able to… verified by…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Action plan — named actions, deadlines, accountability</td>
+          <td class="refl-val">
+            <span class="refl-prompt">Name at least one concrete action, one deadline, and one accountability checkpoint.</span>
+            <textarea rows="3" placeholder="Action · Deadline · Accountability…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Faculty Mentor observations and priority</td>
+          <td class="refl-val">
+            <span class="refl-prompt">Completed by the Faculty Mentor.</span>
+            <textarea rows="3" placeholder="Mentor notes…"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="refl-key">Mentor signature and date</td>
+          <td class="refl-val" style="padding:12px 13px;">
+            <span style="font-size:15px;">Name: ________________________________&nbsp;&nbsp;&nbsp;Date: ________________</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- PDF ZONE — A2+ (after spec) -->
+    <div class="pdf-zone" id="pdf-zone-spec">
+      <p>Your complete self-assessment — Common MBA and Specialisation — is ready. Download a PDF to share with your Faculty Mentor or to keep as a portfolio record.</p>
+      <button class="btn-pdf" onclick="downloadPDF()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download Complete Assessment PDF
+      </button>
+    </div>
+
+  </div><!-- /page-spec -->
+
+</div><!-- /assessment -->
+
+<script>
+'use strict';
+
+// ══════════════════════════════════════════════════════════
+// DATA — 8 Common MBA domains
+// ══════════════════════════════════════════════════════════
+const DOMAINS = [
+  { code:'D1', label:'PO1', name:'Business Problem Solving', levels:[
+    'I can define root cause, MECE, SCQA, hypothesis, and stakeholder — and sketch frameworks like the issue tree and 5 Whys from memory, without prompting.',
+    'I can explain why structuring a problem before jumping to solutions matters, compare SWOT and PESTLE for the same situation, and paraphrase a business scenario into a structured problem statement in my own words.',
+    'I have independently structured a real business case using an issue tree, applied SCQA to frame a recommendation, and executed a root cause analysis without being told which tool to use — and produced a defensible conclusion.',
+    'I have distinguished symptoms from root causes in a complex, multi-layered case, examined how marketing, operations, and financial dimensions of a problem interact, and identified an unstated assumption that caused a proposed solution to fail.',
+    'I have critiqued a consulting report or peer analysis for flaws in problem definition and missing evidence, justified a recommendation over alternatives using explicit criteria, and defended my position under direct challenge in a live presentation.',
+    'I have designed a diagnostic framework for a problem type not covered in coursework, applied it in a real context, and others have found it useful enough to adopt or build on — and I can produce written documentation of the methodology.',
+  ]},
+  { code:'D2', label:'PO2', name:'Analytical Decision Making', levels:[
+    'I can define mean, median, variance, regression, correlation, and the four data types — and list at least five common visualisation types with their stated purposes — from memory.',
+    'I can explain a regression coefficient in plain language to a non-statistician, compare descriptive and inferential statistics in terms of purpose, and identify the central finding and key limitations of a given dataset summary.',
+    'I have independently selected an appropriate analytical method for a real question, run the analysis on real data, and communicated the findings in a form that a non-technical decision-maker could act on — without being told which method to use.',
+    'I have identified unstated assumptions in an analytical model, assessed what happens when those assumptions break down, differentiated between correlation and causation in a real analysis, and integrated data from more than one source into a unified business diagnosis.',
+    'I have evaluated two or more analytical approaches for the same problem using explicit criteria, recommended one with justified reasoning, and defended my choice — including the trade-offs I accepted — under direct challenge.',
+    'I have designed an analytical framework for a problem where no standard model applied, built it from scratch, applied it in a real decision-making context, and produced a result that was used — with documentation others could follow.',
+  ]},
+  { code:'D3', label:'PO3', name:'Leadership & Influence', levels:[
+    'I can name and define at least four leadership theories — Transformational, Transactional, Servant, Authentic — list Tuckman\'s five stages, and define emotional intelligence and its four domains from memory.',
+    'I can explain how transformational and transactional leadership differ in their motivation mechanisms, describe a leadership situation using the language of a named framework, and compare technical and adaptive challenges using an example from my own experience.',
+    'I have led a team through a real task, adapted my approach when it was not working, received 360-degree feedback from peers, and visibly changed my behaviour in a subsequent observed situation in response to that feedback.',
+    'I have examined a leadership failure I was part of — tracing my own assumptions, triggers, and behaviour — differentiated between my stated values and what I actually did under pressure, and connected the outcome to the organisational context that shaped it.',
+    'I have critiqued a leadership decision using explicit criteria of values and effectiveness, justified a difficult interpersonal decision under pressure with transparent reasoning, and defended a recommended leadership approach under challenge.',
+    'I have designed a leadership development experience for others grounded in a specific learning outcome, delivered it, and have evidence — from the participants, not from myself — that their leadership behaviour changed as a result.',
+  ]},
+  { code:'D4', label:'PO4', name:'Global, Ethical & Legal Awareness', levels:[
+    'I can list Hofstede\'s six cultural dimensions, name the key provisions of the UN Global Compact, and define bribery, conflict of interest, fiduciary duty, and corporate governance from memory.',
+    'I can compare utilitarian and Kantian approaches to an ethical dilemma, explain how power distance affects management practice in a specific country context, and describe what BRSR or GRI reporting requires of organisations in my own words.',
+    'I have applied a stakeholder analysis to a real corporate decision identifying ethical obligations to each group, used a cultural framework to adapt communication for a cross-cultural situation, and evaluated a company\'s ESG disclosure against GRI or BRSR criteria.',
+    'I have examined a business situation where legal compliance, cultural sensitivity, and ethical responsibility pointed in different directions, traced the underlying governance failure rather than attributing it to individual bad judgment, and integrated all three into a single written analysis.',
+    'I have critiqued a company\'s ESG report for greenwashing against GRI or BRSR standards, defended a controversial ethical position in a structured debate by engaging directly with the strongest counter-argument, and recommended regulatory improvements with reasoning on both effectiveness and fairness.',
+    'I have designed an ethics framework or compliance protocol for a real or realistic situation — a code of conduct, a cross-cultural governance process, or an ethics training scenario — and have evidence that it changed a decision or behaviour.',
+  ]},
+  { code:'D5', label:'PO5', name:'Teamwork & Self Leadership', levels:[
+    'I can name all nine Belbin roles and define each one, list Tuckman\'s five stages with their characteristics, and define growth mindset, self-efficacy, and emotional regulation as concepts — from memory.',
+    'I can explain a specific team conflict I observed using Tuckman\'s storming stage, describe my typical response under pressure and compare it honestly to growth mindset principles, and explain what a retrospective is and why teams use it with a real example.',
+    'I have facilitated a team retrospective using a structured format, applied a personal development plan with monthly review checkpoints over at least one trimester, and given structured developmental feedback to a peer using a named framework — with a documented conversation that followed.',
+    'I have examined a team conflict I was part of, attributing each person\'s behaviour to specific role expectations, communication patterns, and situational pressures — including my own — and integrated 360-feedback themes into a coherent developmental narrative.',
+    'I have critiqued my own team\'s performance against a named high-performance team model with specific structural and behavioural gaps identified, justified a difficult interpersonal decision with transparent ethical reasoning, and designed a team intervention with explicit success criteria and an evaluation plan.',
+    'I have designed a team charter and operating process for a real group from scratch — grounded in research, not instinct — and have documented evidence from others that the team performed differently as a result. I have developed one peer\'s teamwork skills over a full semester with tracked evidence.',
+  ]},
+  { code:'D6', label:'PO6', name:'Innovation & Entrepreneurship', levels:[
+    'I can list the five stages of Design Thinking, define MVP, pivot, and validated learning precisely, and explain the difference between an idea, an opportunity, and a venture to a sceptical peer — from memory.',
+    'I can explain why customer discovery must precede solution building using a real example of a product that failed because it did not, compare product-centric and customer-centric approaches in terms of risk, and illustrate Jobs-to-be-Done with an original example from my own observation.',
+    'I have conducted at least eight structured user interviews on a real problem, synthesised findings into validated pain points, built a lo-fi prototype, tested it with real users, and completed a Lean Canvas where every element is grounded in evidence — not assumption.',
+    'I have deconstructed a real startup failure, identified the specific assumptions that were never validated, traced the failure to them, differentiated between market risk, execution risk, and team risk, and integrated customer, competitive, and financial perspectives into a coherent diagnosis.',
+    'I have evaluated a set of innovation opportunities against explicit criteria I defined before assessing them, critiqued a business model for its three most dangerous unvalidated assumptions, and defended a pivot decision with evidence from a test I actually ran — under structured challenge.',
+    'I have designed, built, and launched something that reached real users or a real market — with documented traction, learning, or impact — and built the innovation capability of at least one other person in a way they can demonstrate independently.',
+  ]},
+  { code:'D7', label:'PO7', name:'Research & Knowledge Creation', levels:[
+    'I can define research question, hypothesis, variable, validity, and reliability from memory, state the difference between primary and secondary data clearly, and name at least three qualitative and three quantitative data collection methods.',
+    'I can explain why a case study is more appropriate than a survey for exploring a new organisational phenomenon, compare positivist and interpretivist paradigms using an example I generated myself, and draw the Research Onion and explain what each layer decides.',
+    'I have independently designed and executed a research project: chosen the philosophical position, justified the method, collected data, analysed it with an appropriate tool, and written findings that explicitly separate what the data shows from what I infer — without a template telling me how.',
+    'I have critically read a published paper — not just summarised it — identified three methodological assumptions and their limitations on transferability, compared the evidential weight of a peer-reviewed article and a consulting report for the same topic, and synthesised findings from two studies into a single coherent argument.',
+    'I have evaluated a body of literature, identified what remains contested and where the evidence is weakest, determined the most productive next research question, and defended those judgements in a mock viva or peer review under direct challenge.',
+    'I have produced research that says something not already in the existing literature, communicated it in a form others can build on, and mentored at least one junior researcher through a project — with documented evidence of their growing methodological independence.',
+  ]},
+  { code:'D8', label:'PO8', name:'Sustainability & Lifelong Learning', levels:[
+    'I can list the three pillars of the Triple Bottom Line, name at least five UN SDGs relevant to business, and define ESG, BRSR, GRI, TCFD, and carbon footprint in my own words — from memory.',
+    'I can explain the difference between BRSR and GRI reporting requirements for Indian listed companies, compare shareholder and stakeholder theory in terms of their implications for corporate sustainability, and describe what a circular economy transition means for a specific company\'s cost structure.',
+    'I have conducted a materiality assessment for a real or assigned company using GRI or BRSR criteria, applied TCFD scenario analysis to a company\'s climate risk, and integrated sustainability into a financial or strategic analysis without being asked to do so.',
+    'I have examined a company\'s ESG report and identified specific discrepancies between what it claims and what its disclosed data shows, traced how a supply chain sustainability commitment creates financial and reputational risk, and integrated environmental, social, financial, and regulatory dimensions into a single written analysis.',
+    'I have critiqued a corporate net-zero commitment against Science Based Targets methodology, defended a recommendation to exit a profitable but unsustainable business line using both financial and reputational reasoning, and evaluated competing ESG investment strategies with an explicitly justified portfolio recommendation.',
+    'I have designed an ESG governance framework for a real or realistic organisation covering materiality, reporting, and board accountability — and have evidence it changed a decision or disclosure — and built sustainability literacy in at least one other person in a way they can demonstrate.',
+  ]},
+];
+
+// ══════════════════════════════════════════════════════════
+// DATA — 6 Specialisations
+// Each area: { name, behaviour }
+// ══════════════════════════════════════════════════════════
+const SPECS = {
+  BAI: {
+    name: 'Business Analytics & Artificial Intelligence',
+    areas: [
+      { name:'Translating business to analytics',        behaviour:'Converts a vague business problem into a well-defined analytical question with success criteria.' },
+      { name:'Data sourcing & wrangling',                behaviour:'Acquires, cleans, joins, and validates data from messy real-world sources. Knows what the data is not telling you.' },
+      { name:'Statistical reasoning',                    behaviour:'Understands when to use which test; interprets p-values, confidence intervals, and effect sizes correctly.' },
+      { name:'Machine learning fluency',                 behaviour:'Builds and evaluates supervised and unsupervised models. Reasons about bias-variance, overfitting, and generalisation.' },
+      { name:'AI & LLM application',                     behaviour:'Uses generative AI as a productivity and reasoning partner. Knows what to delegate and what to verify.' },
+      { name:'Programming fluency (Python / R)',          behaviour:'Writes clean, reproducible analytical code. Reads someone else\'s code and improves it.' },
+      { name:'SQL & data engineering basics',            behaviour:'Queries databases independently. Understands how data flows from source systems to analytical outputs.' },
+      { name:'Data visualisation & storytelling',        behaviour:'Builds dashboards and visualisations that argue, not just display. Distinguishes the analyst\'s view from the executive\'s.' },
+      { name:'Model deployment & MLOps awareness',       behaviour:'Understands how a model gets from notebook to production. Reasons about monitoring, drift, and retraining.' },
+      { name:'Analytics ethics & responsible AI',        behaviour:'Identifies fairness, privacy, and explainability risks before they become headlines. Articulates trade-offs.' },
+      { name:'Domain translation',                       behaviour:'Bridges the analyst and the business owner. Translates findings into action and action into next questions.' },
+      { name:'Tool ecosystem',                           behaviour:'Operates competently across at least three of: Python, R, SQL, Tableau/Power BI, Excel, cloud notebooks.' },
+    ]
+  },
+  FIN: {
+    name: 'Finance',
+    areas: [
+      { name:'Financial statement analysis',             behaviour:'Reads and interrogates P&L, balance sheet, and cash flow statements. Spots accounting choices and what they signal.' },
+      { name:'Corporate valuation',                      behaviour:'Builds DCF, comparables, and precedent transaction valuations. Defends discount rate and terminal value assumptions.' },
+      { name:'Financial modelling in Excel',             behaviour:'Builds clean, auditable three-statement models. Uses sensitivity, scenario, and Monte Carlo analysis appropriately.' },
+      { name:'Capital markets & instruments',            behaviour:'Understands debt, equity, hybrids, and derivatives. Reads a term sheet and identifies what matters.' },
+      { name:'Risk analysis & management',               behaviour:'Identifies market, credit, operational, and liquidity risks. Quantifies where possible; flags where not.' },
+      { name:'Investment thesis construction',           behaviour:'Builds a structured investment recommendation: thesis, catalysts, risks, target price, conviction.' },
+      { name:'Indian regulatory landscape',              behaviour:'Operates fluently within RBI, SEBI, IRDAI, and IBC frameworks. Reads circulars and identifies commercial impact.' },
+      { name:'Corporate finance decisions',              behaviour:'Reasons about capital structure, dividend policy, M&A, and capital allocation with both theory and practice.' },
+      { name:'Banking & credit',                        behaviour:'Underwrites credit decisions. Understands NPAs, recovery, and the Indian banking system\'s structure and pressures.' },
+      { name:'Fintech & financial innovation',           behaviour:'Stays current on UPI, account aggregators, digital lending, embedded finance. Distinguishes hype from durable shift.' },
+      { name:'Behavioural finance & decision biases',    behaviour:'Recognises behavioural biases in investors, clients, and oneself. Designs around them where possible.' },
+      { name:'ESG & sustainable finance',               behaviour:'Reads BRSR and global ESG frameworks. Understands how sustainability factors enter valuation and credit.' },
+    ]
+  },
+  HRM: {
+    name: 'Human Resources',
+    areas: [
+      { name:'Strategic HR & business partnership',      behaviour:'Links HR initiatives to business strategy. Earns a seat at the table by speaking the language of the business first.' },
+      { name:'Talent acquisition & assessment',          behaviour:'Designs recruitment processes that find capability, not just credentials. Uses structured assessments well.' },
+      { name:'Performance management',                   behaviour:'Designs systems that drive performance without breaking trust. Coaches managers through difficult conversations.' },
+      { name:'Compensation & rewards design',            behaviour:'Designs pay structures that are competitive, equitable, and defensible. Handles transparency and disclosure thoughtfully.' },
+      { name:'Learning & development',                   behaviour:'Designs interventions that change behaviour, not just complete modules. Measures application, not attendance.' },
+      { name:'Organisation design',                      behaviour:'Designs structures, roles, and reporting lines that fit strategy, scale, and stage. Knows when to redesign and when to leave alone.' },
+      { name:'Employee experience & engagement',         behaviour:'Diagnoses culture and engagement using data and ethnography. Designs interventions that move both.' },
+      { name:'HR analytics & workforce data',            behaviour:'Builds and reads workforce dashboards. Distinguishes correlation from causation in people data.' },
+      { name:'Indian labour law & compliance',           behaviour:'Operates fluently across the Code on Wages, Industrial Relations Code, Social Security Code, and OSH Code.' },
+      { name:'Diversity, equity & inclusion',            behaviour:'Designs DEI interventions that go beyond representation to inclusion and equity. Measures outcomes, not announcements.' },
+      { name:'Industrial relations & negotiation',       behaviour:'Manages union and workforce relationships with rigour and respect. Negotiates collectively without escalation.' },
+      { name:'HR technology & digital HR',               behaviour:'Selects and deploys HRMS, ATS, LMS, and people analytics platforms. Reasons about HR\'s AI applications and limits.' },
+      { name:'Ethical practice in HR',                   behaviour:'Holds the line on confidentiality, conflicts of interest, and fairness. Speaks truth to power when the stakes warrant it.' },
+    ]
+  },
+  MKT: {
+    name: 'Marketing',
+    areas: [
+      { name:'Customer & market research',               behaviour:'Designs and runs primary research that yields actionable insight. Distinguishes what customers say from what they do.' },
+      { name:'Segmentation, targeting & positioning',    behaviour:'Segments markets meaningfully. Positions offerings with clarity, distinctiveness, and credibility.' },
+      { name:'Brand strategy & management',              behaviour:'Builds and stewards brands across architecture, expression, and stretch. Reasons about long-term brand equity.' },
+      { name:'Product & service design',                 behaviour:'Designs offerings using jobs-to-be-done, design thinking, and customer co-creation. Iterates with discipline.' },
+      { name:'Pricing strategy',                         behaviour:'Designs pricing using value, cost, and competitive lenses. Reasons about price architecture and willingness to pay.' },
+      { name:'Integrated marketing communications',      behaviour:'Designs campaigns that work across paid, owned, earned, and shared channels. Briefs agencies competently.' },
+      { name:'Digital marketing & performance media',    behaviour:'Operates Google Ads, Meta Ads, programmatic. Reads attribution, CAC, LTV, and ROAS with confidence.' },
+      { name:'Content & creative direction',             behaviour:'Briefs and judges creative work. Distinguishes craft from cleverness; outcomes from awards.' },
+      { name:'Customer experience & journey design',     behaviour:'Maps and designs end-to-end customer journeys. Identifies moments of truth and intervention points.' },
+      { name:'Sales & channel management',               behaviour:'Reasons about distribution, channel partners, and salesforce design. Bridges marketing and sales credibly.' },
+      { name:'Marketing analytics & measurement',        behaviour:'Builds and reads marketing dashboards. Distinguishes vanity metrics from outcome metrics.' },
+      { name:'Indian consumer & cultural fluency',       behaviour:'Reads Indian consumer behaviour across tiers, languages, and contexts. Translates global frameworks to local truths.' },
+      { name:'Marketing technology stack',               behaviour:'Operates competently across CRM, marketing automation, analytics, and content platforms.' },
+    ]
+  },
+  LOS: {
+    name: 'Lean Operations & Systems',
+    areas: [
+      { name:'Operations strategy',                      behaviour:'Links operations decisions — capacity, technology, location, sourcing — to competitive priorities and business strategy.' },
+      { name:'Lean thinking & waste elimination',        behaviour:'Sees the seven (or eight) wastes in any process. Applies lean tools with discipline, not ceremony.' },
+      { name:'Six Sigma & quality management',           behaviour:'Runs DMAIC projects with statistical rigour. Reasons about variation, capability, and control.' },
+      { name:'Process design & re-engineering',          behaviour:'Maps current state honestly; designs future state ambitiously. Manages the transition with both technical and human plans.' },
+      { name:'Supply chain design & management',         behaviour:'Designs networks balancing cost, service, and resilience. Manages inventory, sourcing, and logistics as one system.' },
+      { name:'Demand & capacity planning',               behaviour:'Forecasts demand using appropriate methods. Plans capacity across short, medium, and long horizons.' },
+      { name:'Project & programme management',           behaviour:'Manages complex operational projects to scope, schedule, and cost. Uses appropriate methodologies (PMI, Agile, hybrid).' },
+      { name:'Operations analytics & data fluency',      behaviour:'Builds operations dashboards and uses data to drive improvement. Comfortable with simulation, optimisation, and forecasting tools.' },
+      { name:'Digital operations & Industry 4.0',        behaviour:'Reasons about ERP, RPA, IoT, AI, and digital twins in operations. Distinguishes hype from durable advantage.' },
+      { name:'Sustainability & circular operations',     behaviour:'Designs operations for environmental, social, and economic outcomes. Reads CBAM, BRSR, and emerging frameworks.' },
+      { name:'Operations excellence frameworks',         behaviour:'Operates competently within TPM, TQM, TOC, or similar. Knows when to apply which, and when to combine.' },
+      { name:'Indian manufacturing & services context',  behaviour:'Understands India\'s manufacturing landscape, MSME ecosystem, and services delivery economics. Designs for Indian realities.' },
+      { name:'Operations leadership & change',           behaviour:'Leads change on the shop floor and in the office. Builds problem-solving capability in others.' },
+    ]
+  },
+  IB: {
+    name: 'International Business',
+    areas: [
+      { name:'Global business environment',              behaviour:'Reads geopolitics, trade tensions, and macroeconomic forces. Connects global shifts to specific business decisions.' },
+      { name:'International trade & policy',             behaviour:'Understands WTO frameworks, FTAs, tariffs, non-tariff barriers. Reasons about commercial implications of policy shifts.' },
+      { name:'Cross-border strategy & market entry',     behaviour:'Evaluates entry modes (export, licensing, JV, wholly-owned). Builds market entry plans grounded in country reality.' },
+      { name:'International finance & FX',               behaviour:'Reasons about exchange rates, hedging instruments, and cross-border capital flows. Reads currency markets.' },
+      { name:'Global supply chain & logistics',          behaviour:'Designs and manages international supply chains. Understands incoterms, shipping, customs, and trade documentation.' },
+      { name:'Cross-cultural management',                behaviour:'Reads cultural difference using multiple frameworks. Adapts behaviour without losing self. Manages global teams.' },
+      { name:'International marketing',                  behaviour:'Adapts marketing to local culture, regulation, and channel. Distinguishes global brands from glocal strategies.' },
+      { name:'Global HR & expatriation',                 behaviour:'Manages international assignments, global mobility, and culturally appropriate HR practices.' },
+      { name:'International law & compliance',           behaviour:'Operates fluently around contract law, IP, competition law, and anti-bribery (FCPA, UKBA) across jurisdictions.' },
+      { name:'Country & political risk',                 behaviour:'Assesses country risk across political, economic, and operational dimensions. Designs mitigations.' },
+      { name:'Global negotiation',                       behaviour:'Negotiates across cultures and time zones. Reads what is being said and what is being signalled.' },
+      { name:'Emerging markets & India\'s global role',  behaviour:'Understands India as both a domestic market and a global player. Reads BRICS, Indo-Pacific, and India\'s trade positioning.' },
+      { name:'ESG & global sustainability',              behaviour:'Reads CBAM, EU CSRD, and emerging global ESG frameworks. Reasons about cross-border sustainability obligations.' },
+    ]
+  }
+};
+
+const RBT_LEVELS = [
+  { code:'RBT-1', name:'Remember',   star:false },
+  { code:'RBT-2', name:'Understand', star:false },
+  { code:'RBT-3', name:'Apply',      star:true  },
+  { code:'RBT-4', name:'Analyse',    star:false },
+  { code:'RBT-5', name:'Evaluate',   star:false },
+  { code:'RBT-6', name:'Create',     star:false },
+];
+
+// ══════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════
+let currentAP   = null;
+let currentSpec = null;
+let specBuilt   = false;
+
+// Generate clean RBT-level I-statements from demonstrable behaviour
+// Uses the behaviour as the domain anchor, applies level-appropriate framing
+function generateSpecLevels(behaviour) {
+  // Split into core phrase (before first full stop) for shorter references
+  const core = behaviour.split('.')[0];
+  return [
+    `I can define the key terms, frameworks, and vocabulary relevant to this capability area — and recall what each one is designed to do — without prompting.`,
+    `I can explain in my own words what this capability area requires in practice, describe how it works, and give a concrete example: I can illustrate what good looks like for — ${core.toLowerCase()}.`,
+    `I have applied this capability in a real or realistic context without being told how. I can name the specific situation, what I did, and the outcome. The capability demonstrated: ${core.toLowerCase()}.`,
+    `I have examined a real situation in this capability area in depth — going beyond execution to diagnose what was working, what was not, and the structural or systemic reasons why. I integrated more than one perspective into my analysis.`,
+    `I have evaluated options or approaches in this capability area against explicit criteria, defended my judgement under direct challenge, and recommended a course of action with principled reasoning — not just a preference.`,
+    `I have designed, built, or produced something original in this capability area that others have used or adopted. I have evidence — from someone other than myself — that it made a measurable difference.`,
+  ];
+}
+
+// ══════════════════════════════════════════════════════════
+// BUILD HELPERS
+// ══════════════════════════════════════════════════════════
+function buildRBTTable(domainId, levels) {
+  const rows = levels.map((stmt, li) => {
+    const level = RBT_LEVELS[li];
+    const name  = `chk-${domainId}-${li}`;
+    const star  = level.star ? ' <span class="star">★</span>' : '';
+    return `<tr>
+      <td class="col-level">
+        <span class="level-code">${level.code}</span>
+        <span class="level-name">${level.name}${star}</span>
+      </td>
+      <td class="col-stmt"><span class="stmt-text">${stmt}</span></td>
+      <td class="chk-cell">
+        <input type="radio" name="${name}" value="yes" aria-label="Yes">
+        <span class="chk-label">Yes</span>
+      </td>
+      <td class="chk-cell">
+        <input type="radio" name="${name}" value="partly" aria-label="Partly">
+        <span class="chk-label">Partly</span>
+      </td>
+      <td class="chk-cell">
+        <input type="radio" name="${name}" value="no" aria-label="No">
+        <span class="chk-label">No</span>
+      </td>
+    </tr>`;
+  }).join('');
+
+  return `<div class="rbt-wrap"><table class="rbt-table" aria-label="RBT assessment">
+    <colgroup>
+      <col class="col-level"><col class="col-stmt">
+      <col style="width:9%"><col style="width:9%"><col style="width:9%">
+    </colgroup>
+    <thead><tr>
+      <th>RBT Level</th>
+      <th>Self-Assessment Statement (I-statement)</th>
+      <th class="chk-th">Yes</th>
+      <th class="chk-th">Partly</th>
+      <th class="chk-th">No</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
+}
+
+function buildDomainLevelSelector(domainId, domainName) {
+  const opts = RBT_LEVELS.map(l =>
+    `<label><input type="radio" name="dlvl-${domainId}" value="${l.code}"> ${l.code}${l.star?' ★':''}</label>`
+  ).join('');
+  return `<div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;">
+    <span style="font-size:13px;font-weight:600;min-width:40px;color:#555;">${domainId}</span>
+    <div class="level-sel-row" style="padding:0;gap:6px;flex-wrap:wrap;">${opts}</div>
+  </div>`;
+}
+
+function buildSpecAreaLevelSelector(areaName, idx, specKey) {
+  const opts = RBT_LEVELS.map(l =>
+    `<label><input type="radio" name="slvl-${specKey}-${idx}" value="${l.code}"> ${l.code}${l.star?' ★':''}</label>`
+  ).join('');
+  const shortName = areaName.length > 38 ? areaName.slice(0,35)+'…' : areaName;
+  return `<div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;">
+    <span style="font-size:13px;font-weight:600;min-width:20px;color:#555;">${idx+1}.</span>
+    <span style="font-size:13px;color:#555;margin-right:10px;min-width:160px;">${shortName}</span>
+    <div class="level-sel-row" style="padding:0;gap:6px;flex-wrap:wrap;">${opts}</div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════
+// INIT — build common domains on load
+// ══════════════════════════════════════════════════════════
+function initCommonDomains() {
+  const container = document.getElementById('common-domains');
+  const selContainer = document.getElementById('domain-level-selectors');
+
+  container.innerHTML = DOMAINS.map((dom, di) => `
+    <div class="domain-block">
+      <div class="domain-header">
+        <span class="domain-code">${dom.code}</span>
+        <span class="domain-name">${dom.name}</span>
+        <span class="domain-po">${dom.label}</span>
+      </div>
+      ${buildRBTTable(dom.code, dom.levels)}
+    </div>
+    ${di < DOMAINS.length - 1 ? '<hr class="section-divider">' : ''}
+  `).join('');
+
+  selContainer.innerHTML = DOMAINS.map((dom, di) =>
+    buildDomainLevelSelector(dom.code, dom.name)
+  ).join('');
+}
+
+// ══════════════════════════════════════════════════════════
+// BUILD SPEC PAGE for chosen specialisation
+// ══════════════════════════════════════════════════════════
+function buildSpecPage(specKey) {
+  const spec = SPECS[specKey];
+  if (!spec) return;
+  currentSpec = specKey;
+
+  // Update spec page header
+  document.getElementById('spec-eyebrow').textContent   = `Part 2 — Specialisation · ${specKey}`;
+  document.getElementById('spec-page-title').textContent = spec.name;
+  document.getElementById('spec-refl-label').textContent = `${spec.name} — Specialisation Reflection`;
+  document.getElementById('spec-refl-th').textContent    = `My Response — ${spec.name}`;
+
+  // Build area blocks
+  const container = document.getElementById('spec-areas');
+  container.innerHTML = spec.areas.map((area, ai) => `
+    <div class="spec-block">
+      <div class="spec-area-header">
+        <span class="spec-area-num">Area ${ai+1}</span>
+        <span class="spec-area-name">${area.name}</span>
+      </div>
+      <div class="spec-area-behaviour">${area.behaviour}</div>
+      ${buildRBTTable(`${specKey}-${ai}`, generateSpecLevels(area.behaviour))}
+    </div>
+    ${ai < spec.areas.length - 1 ? '<hr class="section-divider">' : ''}
+  `).join('');
+
+  // Build spec level selectors in reflection table
+  const selContainer = document.getElementById('spec-level-selectors');
+  selContainer.innerHTML = spec.areas.map((area, ai) =>
+    buildSpecAreaLevelSelector(area.name, ai, specKey)
+  ).join('');
+
+  specBuilt = true;
+}
+
+// ══════════════════════════════════════════════════════════
+// FLOW CONTROL
+// ══════════════════════════════════════════════════════════
+function beginAssessment() {
+  // Validate AP selected
+  const ap = document.querySelector('input[name="ap"]:checked');
+  if (!ap) { alert('Please select an Assessment Point before beginning.'); return; }
+  currentAP = ap.value;
+
+  // Hide cover, show assessment
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('assessment').style.display = 'block';
+
+  // Update nav label
+  const name    = document.getElementById('f-name').value.trim() || '—';
+  const apVal   = currentAP;
+  document.getElementById('nav-ap-label').textContent = `${name} · ${apVal}`;
+
+  // Update print summary
+  const date    = document.getElementById('f-date').value;
+  const reg     = document.getElementById('f-reg').value.trim();
+  const batch   = document.getElementById('f-batch').value.trim();
+  const mentor  = document.getElementById('f-mentor').value.trim();
+  const summary = `<span>Name:</span> ${name} &nbsp; <span>Reg:</span> ${reg} &nbsp; <span>Batch:</span> ${batch} &nbsp; <span>AP:</span> ${apVal} &nbsp; <span>Mentor:</span> ${mentor} &nbsp; <span>Date:</span> ${date}`;
+  document.getElementById('print-summary').innerHTML = summary;
+
+  // A0 / A1 — show pdf zone on common page, hide gateway
+  if (currentAP === 'A0' || currentAP === 'A1') {
+    document.getElementById('spec-gateway').style.display  = 'none';
+    document.getElementById('pdf-zone-common').style.display = 'flex';
+    document.getElementById('nav-spec').disabled = true;
+  } else {
+    // A2+ — show gateway, hide common pdf zone
+    document.getElementById('spec-gateway').style.display  = 'block';
+    document.getElementById('pdf-zone-common').style.display = 'none';
+  }
+
+  showPage('common');
+}
+
+function proceedToSpec() {
+  const specRadio = document.querySelector('input[name="spec"]:checked');
+  const errEl     = document.getElementById('gateway-error');
+
+  if (!specRadio) {
+    errEl.style.display = 'block';
+    errEl.scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+  errEl.style.display = 'none';
+
+  const specKey = specRadio.value;
+  buildSpecPage(specKey);
+
+  // Update print summary for spec page
+  const name   = document.getElementById('f-name').value.trim() || '—';
+  const date   = document.getElementById('f-date').value;
+  const reg    = document.getElementById('f-reg').value.trim();
+  const mentor = document.getElementById('f-mentor').value.trim();
+  const specName = SPECS[specKey].name;
+  const sumSpec  = `<span>Name:</span> ${name} &nbsp; <span>Reg:</span> ${reg} &nbsp; <span>AP:</span> ${currentAP} &nbsp; <span>Specialisation:</span> ${specName} &nbsp; <span>Mentor:</span> ${mentor} &nbsp; <span>Date:</span> ${date}`;
+  document.getElementById('print-summary-spec').innerHTML = sumSpec;
+  document.getElementById('print-spec-title').textContent = `${specName} — Specialisation Self-Assessment`;
+
+  // Enable nav
+  const navSpec = document.getElementById('nav-spec');
+  navSpec.disabled = false;
+  navSpec.textContent = `Specialisation (${specKey})`;
+
+  showPage('spec');
+}
+
+function showPage(which) {
+  document.getElementById('page-common').classList.toggle('active', which === 'common');
+  document.getElementById('page-spec').classList.toggle('active',   which === 'spec');
+  document.getElementById('nav-common').classList.toggle('active',  which === 'common');
+  document.getElementById('nav-spec').classList.toggle('active',    which === 'spec');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══════════════════════════════════════════════════════════
+// PDF / PRINT
+// ══════════════════════════════════════════════════════════
+function downloadPDF() {
+  // Show print headers
+  document.getElementById('print-header').style.display      = 'block';
+  document.getElementById('print-header-spec').style.display = specBuilt ? 'block' : 'none';
+
+  // Make both pages visible for print
+  document.getElementById('page-common').style.display = 'block';
+  if (specBuilt) document.getElementById('page-spec').style.display = 'block';
+
+  // Remove active classes temporarily (so print CSS shows both)
+  document.getElementById('page-common').classList.add('active');
+  if (specBuilt) document.getElementById('page-spec').classList.add('active');
+
+  setTimeout(() => {
+    window.print();
+    // Restore after print dialog
+    setTimeout(() => {
+      document.getElementById('print-header').style.display      = 'none';
+      document.getElementById('print-header-spec').style.display = 'none';
+      // Restore single-page view
+      const current = document.getElementById('nav-spec').classList.contains('active') ? 'spec' : 'common';
+      document.getElementById('page-common').classList.toggle('active', current === 'common');
+      document.getElementById('page-spec').classList.toggle('active',   current === 'spec');
+    }, 1200);
+  }, 200);
+}
+
+// ══════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('f-date').valueAsDate = new Date();
+  initCommonDomains();
+});
+
+// Keyboard: Escape does nothing (no modals); arrow keys not needed on scroll model
+</script>
+</body>
+</html>
